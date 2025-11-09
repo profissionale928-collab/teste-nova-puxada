@@ -57,7 +57,7 @@ async function handleSearch(e) {
             'founded.gte': dataInicioISO,
             'founded.lte': dataFimISO,
             'company.simei.optant.eq': 'true', // Filtro MEI reativado
-            'limit': '5' // Aumentado o limite para buscar mais resultados
+            'limit': '250' // Aumentado o limite para buscar mais resultados
         });
 
         const url = `${API_BASE_URL}?${params.toString()}`;
@@ -212,7 +212,7 @@ function exportManychatContacts() {
     // custom_field_CNPJ: Campo personalizado para o CNPJ
     // custom_field_EMAIL: Campo personalizado para o Email
     // custom_field_DATA_ABERTURA: Campo personalizado para a Data de Abertura
-    const header = ['phone', 'Full Name', 'custom_field_DATA_ABERTURA'].join(',');
+    const header = ['phone', 'Full Name'].join(',');
     
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
@@ -232,7 +232,7 @@ function exportManychatContacts() {
         return [
             `"${telefoneRaw}"`, // Telefone no formato internacional
             `"${fullName}"`, // Nome da empresa como Full Name (sem dígitos)
-            `"${dataAbertura}"` // Data de Abertura
+            // Removido: Data de Abertura
         ].join(',');
     }).filter(line => line !== null); // Remove os registros ignorados
 
