@@ -57,7 +57,7 @@ async function handleSearch(e) {
             'founded.gte': dataInicioISO,
             'founded.lte': dataFimISO,
             'company.simei.optant.eq': 'true', // Filtro MEI reativado
-            'limit': '1' // Aumentado o limite para buscar mais resultados
+            'limit': '5' // Aumentado o limite para buscar mais resultados
         });
 
         const url = `${API_BASE_URL}?${params.toString()}`;
@@ -217,7 +217,7 @@ function exportManychatContacts() {
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        const fullName = razaoSocial.replace(/[\d]/g, '').trim();
+        const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         // O Manychat requer o telefone no formato internacional sem formatação (+5511999999999)
         const telefoneRaw = extractPhoneRaw(empresa); 
@@ -363,7 +363,7 @@ function exportData() {
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        const fullName = razaoSocial.replace(/[\d]/g, '').trim();
+        const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa); // Campo formatado
         const dataAbertura = formatarData(empresa.founded);
@@ -488,7 +488,7 @@ function displayResults(results) {
         
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        const fullName = razaoSocial.replace(/[\d]/g, '').trim();
+        const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa);
         const dataAbertura = formatarData(empresa.founded);
