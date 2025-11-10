@@ -217,7 +217,9 @@ function exportManychatContacts() {
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        const firstName = razaoSocial.split(' ')[0] || 'N/A'; // Pega a primeira palavra como First Name
+        // Pega a primeira palavra, remove dígitos e pontos, e garante que não fique vazia
+        const rawFirstName = razaoSocial.split(' ')[0] || 'N/A';
+        const firstName = rawFirstName.replace(/[\d.]/g, '').trim() || 'N/A';
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         // O Manychat requer o telefone no formato internacional sem formatação (+5511999999999)
@@ -364,7 +366,9 @@ function exportData() {
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        const firstName = razaoSocial.split(' ')[0] || 'N/A'; // Pega a primeira palavra como First Name
+        // Pega a primeira palavra, remove dígitos e pontos, e garante que não fique vazia
+        const rawFirstName = razaoSocial.split(' ')[0] || 'N/A';
+        const firstName = rawFirstName.replace(/[\d.]/g, '').trim() || 'N/A';
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa); // Campo formatado
@@ -490,7 +494,9 @@ function displayResults(results) {
         
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        const firstName = razaoSocial.split(' ')[0] || 'N/A'; // Pega a primeira palavra como First Name
+        // Pega a primeira palavra, remove dígitos e pontos, e garante que não fique vazia
+        const rawFirstName = razaoSocial.split(' ')[0] || 'N/A';
+        const firstName = rawFirstName.replace(/[\d.]/g, '').trim() || 'N/A';
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa);
