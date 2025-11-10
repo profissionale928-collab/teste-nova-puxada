@@ -212,11 +212,12 @@ function exportManychatContacts() {
     // custom_field_CNPJ: Campo personalizado para o CNPJ
     // custom_field_EMAIL: Campo personalizado para o Email
     // custom_field_DATA_ABERTURA: Campo personalizado para a Data de Abertura
-    const header = ['Whatsapp Id', 'First Name'].join(',');
+    const header = ['Whatsapp Id', 'First Name', 'Full Name'].join(',');
     
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
+        const firstName = razaoSocial.split(' ')[0] || 'N/A'; // Pega a primeira palavra como First Name
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         // O Manychat requer o telefone no formato internacional sem formatação (+5511999999999)
@@ -231,9 +232,9 @@ function exportManychatContacts() {
 // Usa aspas duplas para encapsular campos que podem conter vírgulas (Razão Social)
 	        return [
 	            `"${telefoneRaw}"`, // Telefone no formato internacional (agora 'Whatsapp Id')
-	            `"${fullName}"`, // Nome da empresa como First Name (sem dígitos)
-	            // Removido: Data de Abertura
-	        ].join(',');
+`"${firstName}"`, // Primeira palavra da Razão Social como First Name
+		            `"${fullName}"`, // Razão Social completa como Full Name
+		        ].join(',');
     }).filter(line => line !== null); // Remove os registros ignorados
 
     if (dataLines.length === 0) {
@@ -363,6 +364,7 @@ function exportData() {
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
+        const firstName = razaoSocial.split(' ')[0] || 'N/A'; // Pega a primeira palavra como First Name
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa); // Campo formatado
@@ -488,6 +490,7 @@ function displayResults(results) {
         
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
+        const firstName = razaoSocial.split(' ')[0] || 'N/A'; // Pega a primeira palavra como First Name
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa);
