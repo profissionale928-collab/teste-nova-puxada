@@ -212,7 +212,7 @@ function exportManychatContacts() {
     // custom_field_CNPJ: Campo personalizado para o CNPJ
     // custom_field_EMAIL: Campo personalizado para o Email
     // custom_field_DATA_ABERTURA: Campo personalizado para a Data de Abertura
-    const header = ['phone', 'Full Name'].join(',');
+    const header = ['Whatsapp Id', 'First Name'].join(',');
     
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
@@ -228,12 +228,12 @@ function exportManychatContacts() {
             return null; // Ignora este registro
         }
 
-        // Usa aspas duplas para encapsular campos que podem conter vírgulas (Razão Social)
-        return [
-            `"${telefoneRaw}"`, // Telefone no formato internacional
-            `"${fullName}"`, // Nome da empresa como Full Name (sem dígitos)
-            // Removido: Data de Abertura
-        ].join(',');
+// Usa aspas duplas para encapsular campos que podem conter vírgulas (Razão Social)
+	        return [
+	            `"${telefoneRaw}"`, // Telefone no formato internacional (agora 'Whatsapp Id')
+	            `"${fullName}"`, // Nome da empresa como First Name (sem dígitos)
+	            // Removido: Data de Abertura
+	        ].join(',');
     }).filter(line => line !== null); // Remove os registros ignorados
 
     if (dataLines.length === 0) {
