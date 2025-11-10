@@ -217,9 +217,10 @@ function exportManychatContacts() {
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        // Pega a primeira palavra, remove dígitos e pontos, e garante que não fique vazia
-        const rawFirstName = razaoSocial.split(' ')[0] || 'N/A';
-        const firstName = rawFirstName.replace(/[\d.]/g, '').trim() || 'N/A';
+        // Remove a parte inicial que é o CNPJ/números (se houver)
+        const namePart = razaoSocial.replace(/^[\d\s\.\/-]+/, '').trim();
+        // Pega a primeira palavra do nome e garante que não fique vazia
+        const firstName = namePart.split(' ')[0].replace(/[\d.]/g, '').trim() || 'N/A';
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         // O Manychat requer o telefone no formato internacional sem formatação (+5511999999999)
@@ -366,9 +367,10 @@ function exportData() {
     const dataLines = allResults.map(empresa => {
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        // Pega a primeira palavra, remove dígitos e pontos, e garante que não fique vazia
-        const rawFirstName = razaoSocial.split(' ')[0] || 'N/A';
-        const firstName = rawFirstName.replace(/[\d.]/g, '').trim() || 'N/A';
+        // Remove a parte inicial que é o CNPJ/números (se houver)
+        const namePart = razaoSocial.replace(/^[\d\s\.\/-]+/, '').trim();
+        // Pega a primeira palavra do nome e garante que não fique vazia
+        const firstName = namePart.split(' ')[0].replace(/[\d.]/g, '').trim() || 'N/A';
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa); // Campo formatado
@@ -494,9 +496,10 @@ function displayResults(results) {
         
         const cnpj = empresa.taxId || 'N/A';
         const razaoSocial = empresa.company?.name || 'N/A';
-        // Pega a primeira palavra, remove dígitos e pontos, e garante que não fique vazia
-        const rawFirstName = razaoSocial.split(' ')[0] || 'N/A';
-        const firstName = rawFirstName.replace(/[\d.]/g, '').trim() || 'N/A';
+        // Remove a parte inicial que é o CNPJ/números (se houver)
+        const namePart = razaoSocial.replace(/^[\d\s\.\/-]+/, '').trim();
+        // Pega a primeira palavra do nome e garante que não fique vazia
+        const firstName = namePart.split(' ')[0].replace(/[\d.]/g, '').trim() || 'N/A';
         const fullName = razaoSocial.replace(/[\d.]/g, '').trim();
         const email = extractEmail(empresa);
         const telefone = extractPhone(empresa);
